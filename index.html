@@ -1,10 +1,531 @@
 <!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-	<!--<script language="JavaScript">random_imglink()</script>-->
-	<h1>Hello World</h1>
-	<p>I'm hosted with GitHub Pages.</p>
-</body>
-</html>
+<html><head><meta charset="utf-8">
+<title>Diablo Killcounter</title>
+    <style type="text/css">
+    :root {
+        --bg-page: #222222;
+        --bg-table: #383838;
+        --text-main: #e0e0e0;
+        --border-color: gray;
+        --bg-golem: #404040;
+    }
+
+    body.light {
+        --bg-page: #e6e6e6;      /* hellgrau statt weiß */
+        --bg-table: #dcdcdc;     /* Tabellen leicht dunkler */
+        --text-main: #1a1a1a;    /* weichere Schrift */
+        --border-color: #888888; /* weniger Kontrast */
+        --bg-golem: #d2d2d2;     /* dezente Hervorhebung */
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        box-shadow: inset 0 0 120px rgba(0,0,0,0.6);
+    }
+
+    body {
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    table {
+        background-color: var(--bg-table);
+        font-size: 16px;
+        padding: .3em;
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+    }
+
+    table td {
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--border-color);
+        border-spacing: 0;
+        text-align: center;
+        transition: background-color 0.15s ease;		        	
+    }
+
+    table tr:nth-child(odd) td {
+        border-bottom: none;
+        height: 110px;
+        vertical-align: bottom;
+    }
+
+    table tr:nth-child(even) td {
+        border-top: none;
+        padding-top: 20px;
+    }
+
+    table tr:last-child td {
+        border-bottom: 1px solid var(--border-color);
+        background-color: var(--bg-golem);
+        vertical-align: top;
+        padding-bottom: 20px;
+    }
+
+    table img {
+        display: block;
+        margin: 0 auto;
+        transition: filter 0.15s ease;
+		transition: transform 0.9s ease;
+    }
+
+    p.total {
+        font-size: 20px;
+        padding-top: 20px;
+        text-align: center;
+    }
+
+    p.last-update {
+        font-size: 12px;
+        padding-top: 40px;
+        text-align: center;
+    }
+
+    .theme-toggle {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    table tr:nth-child(odd):hover td,
+    table tr:nth-child(odd):hover + tr td,
+    table tr:nth-child(even):hover td,
+    table tr:has(+ tr:nth-child(even):hover) td {
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    body.light table tr:nth-child(odd):hover td,
+    body.light table tr:nth-child(odd):hover + tr td,
+    body.light table tr:nth-child(even):hover td,
+    body.light table tr:has(+ tr:nth-child(even):hover) td {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    table p:first-line {
+        font-size: 1.05em;
+    }
+
+    td.boss p {
+        color: #e6c28a;
+        letter-spacing: 0.6px;
+        text-shadow: 0 0 2px rgba(230, 194, 138, 0.25);
+    }
+
+    body.light td.boss p {
+        color: #9a6b2f;            /* dunkler, satter Gold-Braun-Ton */
+        text-shadow: 0 0 1px rgba(154, 107, 47, 0.25);
+    }
+
+    table tr:nth-child(even):hover td.boss p {
+        text-shadow:
+        0 0 6px rgba(230, 194, 138, 0.6),
+        0 0 12px rgba(230, 194, 138, 0.25);
+    }
+
+    table tr:nth-child(odd):hover + tr td.boss p {
+        text-shadow:
+        0 0 6px rgba(230, 194, 138, 0.6),
+        0 0 12px rgba(230, 194, 138, 0.25);
+    }
+
+    table tr:has(+ tr:nth-child(even):hover) td.boss p {
+        text-shadow:
+        0 0 6px rgba(230, 194, 138, 0.6),
+        0 0 12px rgba(230, 194, 138, 0.25);
+    }
+
+    table tr:nth-child(odd):hover td img {
+        filter: brightness(0.85) contrast(1.05);
+		transform: scale(1.07); /* Vergrößert das Bild auf 110% */
+    }
+
+    table tr:has(+ tr:nth-child(even):hover) td img {
+        filter: brightness(0.85) contrast(1.05);
+		transform: scale(1.07); /* Vergrößert das Bild auf 110% */
+    }
+    </style>
+    
+</head><body>
+<button class="theme-toggle" onclick="document.body.classList.toggle('light')">Light / Dark</button>
+<h1>Diablo Kill-Counter</h1>
+<table>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/zombie.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/ghoul.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/rotting-carcass.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/black-death.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Zombie<br>240</p></td>
+<td width="25.00%" class=""><p>Ghoul<br>273</p></td>
+<td width="25.00%" class=""><p>Rotting Carcass<br>114</p></td>
+<td width="25.00%" class=""><p>Black Death<br>140</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/fallen-one-spear.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/carver-spear.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/devil-kin-spear.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/dark-one-spear.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Fallen One Spear<br>294</p></td>
+<td width="25.00%" class=""><p>Carver Spear<br>361</p></td>
+<td width="25.00%" class=""><p>Devil Kin Spear<br>200</p></td>
+<td width="25.00%" class=""><p>Dark One Spear<br>811</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/skeleton.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/corpse-axe.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/burning-dead.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/horror.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Skeleton<br>417</p></td>
+<td width="25.00%" class=""><p>Corpse Axe<br>118</p></td>
+<td width="25.00%" class=""><p>Burning Dead<br>338</p></td>
+<td width="25.00%" class=""><p>Horror<br>979</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/fallen-one.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/carver.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/devil-kin.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/dark-one.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Fallen One<br>479</p></td>
+<td width="25.00%" class=""><p>Carver<br>128</p></td>
+<td width="25.00%" class=""><p>Devil Kin<br>392</p></td>
+<td width="25.00%" class=""><p>Dark One<br>718</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/scavenger.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/plague-eater.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/shadow-beast.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/bone-gasher.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Scavenger<br>526</p></td>
+<td width="25.00%" class=""><p>Plague Eater<br>215</p></td>
+<td width="25.00%" class=""><p>Shadow Beast<br>789</p></td>
+<td width="25.00%" class=""><p>Bone Gasher<br>2.043</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/skeleton-bow.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/corpse-bow.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/burning-dead-bow.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/horror-bow.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Skeleton Bow<br>249</p></td>
+<td width="25.00%" class=""><p>Corpse Bow<br>344</p></td>
+<td width="25.00%" class=""><p>Burning Dead Bow<br>773</p></td>
+<td width="25.00%" class=""><p>Horror Bow<br>1.393</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/skeleton-captain.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/corpse-captain.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/burning-dead-captain.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/horror-captain.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Skeleton Captain<br>457</p></td>
+<td width="25.00%" class=""><p>Corpse Captain<br>536</p></td>
+<td width="25.00%" class=""><p>Burning Dead Captain<br>742</p></td>
+<td width="25.00%" class=""><p>Horror Captain<br>1.796</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hidden.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/stalker.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/unseen.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/illusion-weaver.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Hidden<br>605</p></td>
+<td width="25.00%" class=""><p>Stalker<br>1.893</p></td>
+<td width="25.00%" class=""><p>Unseen<br>1.577</p></td>
+<td width="25.00%" class=""><p>Illusion Weaver<br>1.063</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/flesh-clan.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/stone-clan.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/fire-clan.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/night-clan.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Flesh Clan<br>1.207</p></td>
+<td width="25.00%" class=""><p>Stone Clan<br>1.505</p></td>
+<td width="25.00%" class=""><p>Fire Clan<br>1.625</p></td>
+<td width="25.00%" class=""><p>Night Clan<br>1.168</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/flesh-clan-bow.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/stone-clan-bow.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/fire-clan-bow.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/night-clan-bow.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Flesh Clan Bow<br>1.207</p></td>
+<td width="25.00%" class=""><p>Stone Clan Bow<br>1.596</p></td>
+<td width="25.00%" class=""><p>Fire Clan Bow<br>1.300</p></td>
+<td width="25.00%" class=""><p>Night Clan Bow<br>1.143</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/fiend.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/blink.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/gloom.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/familiar.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Fiend<br>255</p></td>
+<td width="25.00%" class=""><p>Blink<br>1.268</p></td>
+<td width="25.00%" class=""><p>Gloom<br>2.077</p></td>
+<td width="25.00%" class=""><p>Familiar<br>4.243</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/acid-beast.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/poison-spitter.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/pit-beast.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/lava-maw.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Acid Beast<br>2.420</p></td>
+<td width="25.00%" class=""><p>Poison Spitter<br>1.994</p></td>
+<td width="25.00%" class=""><p>Pit Beast<br>779</p></td>
+<td width="25.00%" class=""><p>Lava Maw<br>6.144</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/overlord.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/mud-man.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/toad-demon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/flayed-one.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Overlord<br>1.473</p></td>
+<td width="25.00%" class=""><p>Mud Man<br>1.699</p></td>
+<td width="25.00%" class=""><p>Toad Demon<br>957</p></td>
+<td width="25.00%" class=""><p>Flayed One<br>557</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/magma-demon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/blood-stone.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hell-stone.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/lava-lord.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Magma Demon<br>574</p></td>
+<td width="25.00%" class=""><p>Blood Stone<br>423</p></td>
+<td width="25.00%" class=""><p>Hell Stone<br>821</p></td>
+<td width="25.00%" class=""><p>Lava Lord<br>644</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/horned-demon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/mud-runner.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/frost-charger.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/obsidian-lord.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Horned Demon<br>1.731</p></td>
+<td width="25.00%" class=""><p>Mud Runner<br>690</p></td>
+<td width="25.00%" class=""><p>Frost Charger<br>685</p></td>
+<td width="25.00%" class=""><p>Obsidian Lord<br>410</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/red-storm.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/storm-rider.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/storm-lord.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/maelstorm.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Red Storm<br>240</p></td>
+<td width="25.00%" class=""><p>Storm Rider<br>419</p></td>
+<td width="25.00%" class=""><p>Storm Lord<br>1.763</p></td>
+<td width="25.00%" class=""><p>Maelstorm<br>2.254</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/winged-demon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/gargoyle.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/blood-claw.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/death-wing.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Winged Demon<br>1.612</p></td>
+<td width="25.00%" class=""><p>Gargoyle<br>866</p></td>
+<td width="25.00%" class=""><p>Blood Claw<br>850</p></td>
+<td width="25.00%" class=""><p>Death Wing<br>105</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/slayer.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/guardian.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/vortex-lord.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/balrog.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Slayer<br>190</p></td>
+<td width="25.00%" class=""><p>Guardian<br>1.502</p></td>
+<td width="25.00%" class=""><p>Vortex Lord<br>2.392</p></td>
+<td width="25.00%" class=""><p>Balrog<br>6.513</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/cave-viper.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/fire-drake.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/gold-viper.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/azure-drake.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Cave Viper<br>3.181</p></td>
+<td width="25.00%" class=""><p>Fire Drake<br>5.418</p></td>
+<td width="25.00%" class=""><p>Gold Viper<br>6.350</p></td>
+<td width="25.00%" class=""><p>Azure Drake<br>7.313</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/black-knight.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/doom-guard.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/steel-lord.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/blood-knight.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Black Knight<br>3.568</p></td>
+<td width="25.00%" class=""><p>Doom Guard<br>5.902</p></td>
+<td width="25.00%" class=""><p>Steel Lord<br>6.702</p></td>
+<td width="25.00%" class=""><p>Blood Knight<br>36.696</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/succubus.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/snow-witch.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hell-spawn.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/soul-burner.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Succubus<br>4.472</p></td>
+<td width="25.00%" class=""><p>Snow Witch<br>8.710</p></td>
+<td width="25.00%" class=""><p>Hell Spawn<br>10.250</p></td>
+<td width="25.00%" class=""><p>Soul Burner<br>6.150</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/counselor.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/magistrate.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/cabalist.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/advocate.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Counselor<br>1.603</p></td>
+<td width="25.00%" class=""><p>Magistrate<br>3.087</p></td>
+<td width="25.00%" class=""><p>Cabalist<br>2.526</p></td>
+<td width="25.00%" class=""><p>Advocate<br>30.029</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hellboar.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/stinger.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/felltwin.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hork-spawn.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Hellboar<br>544</p></td>
+<td width="25.00%" class=""><p>Stinger<br>690</p></td>
+<td width="25.00%" class=""><p>Felltwin<br>373</p></td>
+<td width="25.00%" class=""><p>Hork Spawn<br>698</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/psychorb.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/necromorb.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/arachnon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/spider-lord.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Psychorb<br>489</p></td>
+<td width="25.00%" class=""><p>Necromorb<br>381</p></td>
+<td width="25.00%" class=""><p>Arachnon<br>506</p></td>
+<td width="25.00%" class=""><p>Spider Lord<br>566</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/venomtail.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/lashworm.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/torchant.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/the-shredded.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Venomtail<br>809</p></td>
+<td width="25.00%" class=""><p>Lashworm<br>367</p></td>
+<td width="25.00%" class=""><p>Torchant<br>529</p></td>
+<td width="25.00%" class=""><p>The Shredded<br>512</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/devil-kin-brute.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/satyr-lord.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/gravedigger.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/tomb-rat.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Devil Kin Brute<br>1.097</p></td>
+<td width="25.00%" class=""><p>Satyr Lord<br>1.175</p></td>
+<td width="25.00%" class=""><p>Gravedigger<br>516</p></td>
+<td width="25.00%" class=""><p>Tomb Rat<br>1.128</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/firebat.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hellbat.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/skullwing.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/bone-demon.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Firebat<br>1.072</p></td>
+<td width="25.00%" class=""><p>Hellbat<br>3.787</p></td>
+<td width="25.00%" class=""><p>Skullwing<br>1.338</p></td>
+<td width="25.00%" class=""><p>Bone Demon<br>519</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/lich_neu.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/arch-lich.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/crypt-demon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/biclops.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Lich<br>1.018</p></td>
+<td width="25.00%" class=""><p>Arch Lich<br>7.279</p></td>
+<td width="25.00%" class=""><p>Crypt Demon<br>930</p></td>
+<td width="25.00%" class=""><p>Biclops<br>3.889</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/flesh-thing.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/reaper.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/the-butcher.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/skeleton-king.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=""><p>Flesh Thing<br>3.631</p></td>
+<td width="25.00%" class=""><p>Reaper<br>4.165</p></td>
+<td width="25.00%" class=" boss"><p>The Butcher<br>19</p></td>
+<td width="25.00%" class=" boss"><p>Skeleton King<br>11</p></td>
+</tr>
+<tr>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/diablo.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/hork-demon.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/the-defiler.webp"></td>
+<td width="25.00%"><img src="https://stoffelkopf.github.io/images/na-krul.webp"></td>
+</tr>
+<tr>
+<td width="25.00%" class=" boss"><p>Diablo<br>284</p></td>
+<td width="25.00%" class=" boss"><p>Hork Demon<br>18</p></td>
+<td width="25.00%" class=" boss"><p>The Defiler<br>15</p></td>
+<td width="25.00%" class=" boss"><p>Na-Krul<br>131</p></td>
+</tr>
+<tr>
+<td colspan="4"><br><img src="https://stoffelkopf.github.io/images/golem.webp"><br><br>... and 15 innocent Golems lost their life too ;)</td>
+</tr>
+</table>
+<p class="total">Total Kills: 260.747</p>
+<p class="last-update">Last update: 02.04.2026 16:14</p>
+</body></html>
